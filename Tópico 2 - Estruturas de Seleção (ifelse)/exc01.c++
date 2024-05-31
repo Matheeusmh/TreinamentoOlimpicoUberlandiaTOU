@@ -8,6 +8,7 @@ using namespace std;
 int main(void) {
     int idade;
 
+    cout << "Digite a idade: ";
     cin >> idade;
 
     if(idade >= 18) {
