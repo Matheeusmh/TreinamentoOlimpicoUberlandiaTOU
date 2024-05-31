@@ -8,7 +8,7 @@ using namespace std;
 int main(void) {
     double gasolina;
 
-    cout << "Digite o preco da gasolina: ";
+    cout << "Digite o preco da gasolina: R$";
     cin >> gasolina;
 
     if(gasolina > 5.98) {
