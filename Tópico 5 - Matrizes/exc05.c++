@@ -14,17 +14,14 @@ int main(void) {
         for(int j = 0; j < 12; j++) {
             cin >> matriz[i][j];
 
-            if(j > 11 - i && i <= 6) {
-                soma += matriz[i][j];
-                n++;
-            }
-            else if(j > i) {
+            if(j > 11 - i && j > i) {
                 soma += matriz[i][j];
                 n++;
             }
         }
     }
     
+    cout << setprecision(1) << fixed;
 
     media = soma / n;
 
@@ -37,5 +34,3 @@ int main(void) {
 
     return 0;
 }
-
-//Testar depois
