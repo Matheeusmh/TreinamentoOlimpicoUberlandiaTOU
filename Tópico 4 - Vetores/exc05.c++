@@ -11,7 +11,7 @@ int main(void) {
 
     cout << setprecision(4) << fixed;
 
-    cout << "N[" << 0 << "] = " << vet[0] << endl;
+    cout << "N[0] = " << vet[0] << endl;
 
     for(int i = 1; i < 100; i++) {
         vet[i] = vet[i - 1] / 2;
