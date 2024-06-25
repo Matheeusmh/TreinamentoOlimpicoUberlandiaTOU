@@ -6,7 +6,7 @@ using namespace std;
 class Dieta {
     string dieta;
     string consumidos;
-
+ 
     public:
     Dieta(string dieta, string consumidos) {
         this->dieta = dieta;
