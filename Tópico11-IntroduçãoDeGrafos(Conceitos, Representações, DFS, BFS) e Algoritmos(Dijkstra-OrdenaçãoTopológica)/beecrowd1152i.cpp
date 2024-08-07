@@ -6,37 +6,64 @@ using namespace std;
 #define f first 
 #define s second
 
-vector<vector<ii>> adj;
+const int INF = 1e9;
+const int MAX = 200000;
+
+vector<ii> adj[MAX];
 vector<int> dist;
 vector<bool> visitado;
 
-void dijkstra(int n) {
-    dist[n] = 0;
-    priority_queue<ii, vector<ii>, greater<ii>> q;
-    q.push({0, n});
-    visitado[n] = true;
+vector<int> todosTestes;
 
-    while(!q.empty()) {
-        int u = q.top().f;
-        
+void dijkstra(int s) {
+    dist[s] = 0;
+    priority_queue<ii, vector<ii>, greater<ii>> pq;
+    pq.push({0, s});
+
+    while(!pq.empty()) {
+        int u = pq.top().s;
+        pq.pop();
+
+        if(!visitado[u]) {
+            visitado[u] = true;
+        }
+
+        for(auto e : adj[u]) {
+            int v = e.f, w = e.s;
+
+            if(dist[v] > w) {
+                dist[v] = w;
+                pq.push({dist[v], v});
+            }
+        }
+    }
+
+    for(auto e : dist) {
+        cout << e << " ";
     }
 }
 
 int main(void) {
-    int n, m; cin >> m >> n;
+    int m, n; cin >> m >> n;
 
-    while(n > 0 && m > 0) {
-        adj.assign(m, vector<ii> (0, {0, 0}));
-        dist.assign(m, 0);
+    while(m != 0 && n != 0) {
+        dist.assign(m, INF);
         visitado.assign(m, false);
-        
-        for(int i = 0; i < n; i++) {
-            int x, y, z; cin >> x >> y >> z;
 
-            adj[x].push_back(make_pair(y, z));
-            adj[y].push_back(make_pair(x, z));
+        for(int i = 0; i < n; i++) {
+            int x, y, peso; cin >> x >> y >> peso;
+
+            adj[x].push_back(make_pair(y, peso));
+            adj[y].push_back(make_pair(x, peso));
         }
 
         dijkstra(0);
+
+        cout << endl;
+        cin >> m >> n;
+        dist.clear();
+        visitado.clear();
     }
+
+    return 0;
 }
