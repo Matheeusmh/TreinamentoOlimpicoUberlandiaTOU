@@ -1,39 +1,59 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 
 using namespace std;
 
-vector<int> id, sz;
+vector<int> sz, id;
+vector<int> custos;
 
-int find(int x) {
-    return id[x] = (id[x] == x ? x : find(id[x]));
+int find(int p) {
+    return id[p] = (id[p] == p ? p : find(id[p]));
 }
 
-int uni(int x, int y) {
-    x = find(x), y = find(y);
-    if(x == y) return;
-    if(sz[x] > sz[y]) swap(x, y);
-    id[x] = y;
-    sz[y] += sz[x];
-
+void uni(int p, int q) {
+    p = find(p), q = find(q);
+    if(p == q) return;
+    if(sz[p] > sz[q]) swap(p, q);
+    id[p] = q;
+    sz[p] += sz[q];
 }
 
-int main(void) {
-    int m, n; cin >> m >> n;
+ int main(void) {
+    int total;
 
-    while(m != 0 && n != 0) {
-        vector<tuple<int, int, int>> adj;
-        id.resize(n); sz.resize(n);
+    while(1) {
+        int n, m, c = 0; cin >> n >> m;
+        vector<tuple<int, int, int>> g;
 
-        for(int i = 0; i < n; i++) {
-            int x, y, z; cin >> x >> y >> z;
-
-            adj.push_back(make_tuple(x, y, z));
-            id[i] = i; sz[i] = 1;
+        if(n == 0 && m == 0) {
+            break;
         }
 
-        sort(adj.begin(), adj.end());
+        total = 0;
+        
+        id = vector<int> (n);
+        sz = vector<int> (n, 1);
 
+        iota(id.begin(), id.end(), 0);
+
+        for(int i = 0; i < m; i++) {
+            int x, y, z; cin >> x >> y >> z;
+
+            total += z;
+
+            g.emplace_back(z, x, y);
+        }
+
+        sort(g.begin(), g.end());
+
+        for(auto [z, x, y] : g) {
+            if(find(y) != find(x)) {
+                uni(y, x);
+                c += z;
+            }
+        }
+
+        cout << total - c << endl;    
     }
 
     return 0;
-}
+ }
